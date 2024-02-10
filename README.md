@@ -38,43 +38,6 @@ Y <- gdp[-c(1:3)] # Excluding the first 3 rows to match 'Xwl'
 
 n2 <- nrow(Xwl) # Update 'n2' to reflect the number of rows in 'Xwl' after exclusion
 
-PDC_SIS <- function(X, Y, lags = 3, top_n = 10) {
-  n <- nrow(X)
-  d <- ncol(X)
-  
-  # Dynamically generate lagged versions of Y based on the specified 'lags'
-  laggedYs <- list(Y) # Start with Y itself
-  for (lag in 1:lags) {
-    laggedYs[[lag + 1]] <- c(rep(NA, lag), Y[1:(length(Y) - lag)])
-  }
-  
-  # Combine all lagged versions of Y for conditioning
-  Y_conditioning <- do.call(cbind, laggedYs)
-  Y_conditioning_df <- as.data.frame(Y_conditioning)
-  names(Y_conditioning_df) <- c("Y", paste0("Lag", 1:lags))
-  
-  # Remove rows with NA values in Y_conditioning_df and correspondingly in X
-  valid_rows <- complete.cases(Y_conditioning_df)
-  Y_conditioning_df <- Y_conditioning_df[valid_rows, ]
-  X <- X[valid_rows, ]
-  
-  # Update n to reflect the number of rows after removing NAs
-  n <- nrow(X)
-  
-  # Reinitialize a vector for storing PDC values
-  pdc <- numeric(d)
-  for (j in 1:d) {
-    # Compute PDC using the updated X and Y_conditioning without NAs
-    pdc[j] <- pdcor(Y_conditioning_df[, "Y"], X[,j], Y_conditioning_df[, -1])
-  }
-  
-  # Determine top predictors based on PDC values
-  indices <- order(abs(pdc), decreasing = TRUE)[1:min(top_n, length(pdc))]
-  
-  # Return the indices of top predictors, the screened set, and the conditioning set without NAs
-  return(list(indices = indices, screened_set = X[, indices, drop = FALSE], Y_conditioning_df = Y_conditioning_df))
-}
-
 # Apply the function
 results <- PDC_SIS(Xwl, Y, lags = 1, top_n = 10)
 
