@@ -46,8 +46,6 @@ print(results$indices)
 # Output the data frame of lagged versions of Y
 print(head(results$Y_conditioning_df))
 
-
-# Assuming results$indices contains the indices of selected columns
 selected_indices <- results$indices
 
 # Initialize an empty list to store the selected data frames
