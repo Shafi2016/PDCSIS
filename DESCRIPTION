@@ -1,0 +1,10 @@
+Package: PDCSIS
+Type: Package
+Title: Partial Distance Correlation and Sure Independence Screening
+Version: 0.1.0
+Author: Shafiullah Qureshi
+Maintainer: Shafiullah Qureshi <qureshi.shafiullah@gmail.com>
+Description: Implements methods for dimensionality reduction and variable selection in high-dimensional datasets using Partial Distance Correlation (PDC) and Sure Independence Screening (SIS). Use four spaces when indenting paragraphs within the Description.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
