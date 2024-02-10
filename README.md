@@ -11,20 +11,13 @@ devtools::install_github("https://github.com/Shafi2016/PDCSIS.git")
 
 ```r
 library(PDCSIS)
-
 library(energy)
 library(dplyr)
 library(gtools) # For mixedorder
-
-
-
-
 set.seed(23)
 
 url <- "https://raw.githubusercontent.com/Shafi2016/PDCSIS/main/data/google_trends.csv"
 df <- read.csv(url)
-
-
 
 # Extracting the GDP column as the target variable 'Y'
 gdp <- df[,"gdpm"]
@@ -39,7 +32,6 @@ PredictLag3 <- data %>%
 
 # Adjusting 'Xwl' to exclude rows with NAs introduced by lagging, ensuring alignment with 'Y'
 Xwl <- as.matrix(PredictLag3[-c(1:3),]) # Excluding the first 3 rows due to NA from lagging
-
 
 # Adjust 'gdp' to match the reduced dataset size
 Y <- gdp[-c(1:3)] # Excluding the first 3 rows to match 'Xwl'
